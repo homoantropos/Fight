@@ -2,21 +2,21 @@ package Competitions;
 
 class Judge extends Person {
 
-    private String category;
+    private CategoriesOfJadges category;
     private Float decicion;
 
-    Judge (String name, Boolean sex, String town, String category) {
+    Judge (String name, Boolean sex, String town, CategoriesOfJadges category) {
         super(name, sex, town);
         this.category = category;
         this.decicion = decicion;
     }
 Judge () {}
 
-    String getCategory() {
+    CategoriesOfJadges getCategory() {
         return category;
     }
 
-    void setCategory(String category) {
+    void setCategory(CategoriesOfJadges category) {
         this.category = category;
     }
 
@@ -46,6 +46,6 @@ Judge () {}
 
     @Override
     public String toString() {
-        return getName() + " " + getTown() + " " + getCategory();
+        return (String.format("%-30s %-20s %3s", getName(), getTown(), category.getCategoryName()));
     }
 }

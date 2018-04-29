@@ -29,7 +29,7 @@ class Secretary extends Judge {
         String name = askName();
         Boolean sex = askSex();
         String town = askTown();
-        String category = askCategory();
+        CategoriesOfJadges category = askCategory();
 
         Judge judge = new Judge(name, sex, town, category);
 
@@ -114,9 +114,32 @@ class Secretary extends Judge {
         return kindOfTao;
         }
 
-    String askCategory() {
-         System.out.println("Категорія:");
-         String category = ScanningHelper.inputString();
+    CategoriesOfJadges askCategory() {
+        System.out.println("Категорія:");
+        String categoryName = ScanningHelper.inputString();
+        CategoriesOfJadges category = CategoriesOfJadges.THIRD_CATEGORY;
+        switch (categoryName) {
+            case "ІІІ": {
+                category = CategoriesOfJadges.THIRD_CATEGORY;
+                break;
+            }
+            case "ІІ": {
+                category = CategoriesOfJadges.SECOND_CATEGORY;
+                break;
+            }
+            case "І": {
+                category = CategoriesOfJadges.FIRST_CATEGORY;
+                break;
+            }
+            case "НК": {
+                category = CategoriesOfJadges.NATIONAL_CATEGORY;
+                break;
+            }
+            case "МК": {
+                category = CategoriesOfJadges.INTERNATIONAL_CATEGORY;
+                break;
+            }
+        }
          return category;
          }
 
