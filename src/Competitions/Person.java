@@ -1,6 +1,8 @@
 package Competitions;
 
-class Person {
+import java.io.Serializable;
+
+class Person implements Serializable {
 
     private String name;
     private Boolean sex;

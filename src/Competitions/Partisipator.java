@@ -2,7 +2,7 @@ package Competitions;
 
 import java.time.LocalDate;
 
-class Partisipator extends Person {
+class Partisipator extends Person implements Comparable <Partisipator>{
 
     private Integer age;
     private LocalDate dOB;
@@ -65,6 +65,10 @@ class Partisipator extends Person {
 
     void setPlace(Integer place) {
         this.place = place;
+    }
+
+    public int compareTo (Partisipator ps) {
+        return this.age.compareTo(ps.age);
     }
 
     @Override

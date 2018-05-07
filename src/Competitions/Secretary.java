@@ -77,7 +77,7 @@ class Secretary extends Judge {
         return doB;
     }
 
-    Integer askAge(LocalDate doB) {
+    static Integer askAge(LocalDate doB) {
         String dobf = doB.toString()+"T00:00:00Z";
         final long COUNT_MIN_TO_YEARS = 365*24*60*60;
         long countOfyears;
