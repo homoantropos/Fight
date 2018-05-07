@@ -7,7 +7,8 @@ public class Competitions {
 
 
     public static void main(String[] args) {
-        FileManager.creatDirectory();
+        ParticipantsInputer partIn = new ParticipantsInputer();
+        partIn.go();
 
 //        System.out.println("Розпочати змагання? Виберіть +/-: ");
 //
