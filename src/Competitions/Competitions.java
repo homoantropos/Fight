@@ -1,17 +1,13 @@
 package Competitions;
-import java.time.LocalDate;
+import Competitions.enums.CategoriesOfJudges;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Competitions {
 
 
     public static void main(String[] args) {
-        MainJudge mJ = new MainJudge("Антропов Сергій", CategoriesOfJadges.INTERNATIONAL_CATEGORY);
-        ArrayList<Judge> judges = mJ.panelOfjudgeRegistration();
-        for (Judge j : judges) {
-            System.out.println(j.toString());
-        }
+        FileManager.creatDirectory();
 
 //        System.out.println("Розпочати змагання? Виберіть +/-: ");
 //

@@ -1,13 +1,15 @@
 package Competitions;
 
+import Competitions.enums.CategoriesOfJudges;
+
 import java.util.ArrayList;
 
 class MainJudge {
 
     String name;
-    CategoriesOfJadges category;
+    CategoriesOfJudges category;
 
-    MainJudge(String name, CategoriesOfJadges category) {
+    MainJudge(String name, CategoriesOfJudges category) {
         this.name = name;
         this.category = category;
     }
@@ -34,23 +36,23 @@ class MainJudge {
         String categoryName = ScanningHelper.inputString();
         switch (categoryName) {
             case "ІІІ": {
-                category = CategoriesOfJadges.THIRD_CATEGORY;
+                category = CategoriesOfJudges.THIRD_CATEGORY;
                 break;
             }
             case "ІІ": {
-                category = CategoriesOfJadges.SECOND_CATEGORY;
+                category = CategoriesOfJudges.SECOND_CATEGORY;
                 break;
             }
             case "І": {
-                category = CategoriesOfJadges.FIRST_CATEGORY;
+                category = CategoriesOfJudges.FIRST_CATEGORY;
                 break;
             }
             case "НК": {
-                category = CategoriesOfJadges.NATIONAL_CATEGORY;
+                category = CategoriesOfJudges.NATIONAL_CATEGORY;
                 break;
             }
             case "МК": {
-                category = CategoriesOfJadges.INTERNATIONAL_CATEGORY;
+                category = CategoriesOfJudges.INTERNATIONAL_CATEGORY;
                 break;
             }
         }

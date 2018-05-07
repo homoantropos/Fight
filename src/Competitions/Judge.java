@@ -1,22 +1,24 @@
 package Competitions;
 
+import Competitions.enums.CategoriesOfJudges;
+
 class Judge extends Person {
 
-    private CategoriesOfJadges category;
+    private CategoriesOfJudges category;
     private Float decicion;
 
-    Judge (String name, Boolean sex, String town, CategoriesOfJadges category) {
+    Judge (String name, Boolean sex, String town, CategoriesOfJudges category) {
         super(name, sex, town);
         this.category = category;
         this.decicion = decicion;
     }
 Judge () {}
 
-    CategoriesOfJadges getCategory() {
+    CategoriesOfJudges getCategory() {
         return category;
     }
 
-    void setCategory(CategoriesOfJadges category) {
+    void setCategory(CategoriesOfJudges category) {
         this.category = category;
     }
 

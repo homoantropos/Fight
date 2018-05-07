@@ -1,4 +1,6 @@
 package Competitions;
+import Competitions.enums.CategoriesOfJudges;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -29,7 +31,7 @@ class Secretary extends Judge {
         String name = askName();
         Boolean sex = askSex();
         String town = askTown();
-        CategoriesOfJadges category = askCategory();
+        CategoriesOfJudges category = askCategory();
 
         Judge judge = new Judge(name, sex, town, category);
 
@@ -114,29 +116,29 @@ class Secretary extends Judge {
         return kindOfTao;
         }
 
-    CategoriesOfJadges askCategory() {
+    CategoriesOfJudges askCategory() {
         System.out.println("Категорія:");
         String categoryName = ScanningHelper.inputString();
-        CategoriesOfJadges category = CategoriesOfJadges.THIRD_CATEGORY;
+        CategoriesOfJudges category = CategoriesOfJudges.THIRD_CATEGORY;
         switch (categoryName) {
             case "ІІІ": {
-                category = CategoriesOfJadges.THIRD_CATEGORY;
+                category = CategoriesOfJudges.THIRD_CATEGORY;
                 break;
             }
             case "ІІ": {
-                category = CategoriesOfJadges.SECOND_CATEGORY;
+                category = CategoriesOfJudges.SECOND_CATEGORY;
                 break;
             }
             case "І": {
-                category = CategoriesOfJadges.FIRST_CATEGORY;
+                category = CategoriesOfJudges.FIRST_CATEGORY;
                 break;
             }
             case "НК": {
-                category = CategoriesOfJadges.NATIONAL_CATEGORY;
+                category = CategoriesOfJudges.NATIONAL_CATEGORY;
                 break;
             }
             case "МК": {
-                category = CategoriesOfJadges.INTERNATIONAL_CATEGORY;
+                category = CategoriesOfJudges.INTERNATIONAL_CATEGORY;
                 break;
             }
         }
