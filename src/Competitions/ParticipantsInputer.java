@@ -1,11 +1,16 @@
 package Competitions;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.TreeSet;
+
+import static java.util.Calendar.YEAR;
 
 class ParticipantsInputer extends JPanel {
     JFrame frame;
@@ -16,12 +21,16 @@ class ParticipantsInputer extends JPanel {
     JRadioButton sexCBf;
     JLabel townL;
     JTextField townText;
-    JLabel yearL;
-    JTextField yearsText;
-    JLabel monthL;
-    JTextField monthText;
-    JLabel dateL;
-    JTextField dateText;
+    JList yearsList;
+    JScrollPane yearScroller;
+    JMenuBar yearMB;
+    JMenu yearM;
+    JMenu monthM;
+    JList monthList;
+    JScrollPane monthsScroller;
+    JMenu dateM;
+    JList dateList;
+    JScrollPane dateScroller;
     JLabel clubL;
     JTextField clubText;
     JLabel coachL;
@@ -52,11 +61,13 @@ class ParticipantsInputer extends JPanel {
     TreeSet<Partisipator> participators = new TreeSet<>();
 
 
-    void go () {
+    void go() {
 
-        JPanel panel = new JPanel ();
-        JLabel title = new JLabel(" ");
+        JPanel panel = new JPanel();
+        JLabel title = new JLabel("     ");
         JLabel title1 = new JLabel(" ");
+        JLabel title2 = new JLabel("     ");
+        JLabel title3 = new JLabel("     ");
 
 
         frame = new JFrame();
@@ -79,17 +90,55 @@ class ParticipantsInputer extends JPanel {
         townText = new JTextField(18);
         townText.addActionListener(new TownListener());
 
-        yearL = new JLabel("Рік:");
-        yearsText = new JTextField(4);
-        yearsText.addActionListener(new YearListener());
+        yearMB = new JMenuBar();
+        yearM = new JMenu("Рік");
+        Integer[] years = new Integer[50];
+        Calendar today = Calendar.getInstance();
+        Integer year = today.get(YEAR) - 6;
+        for (int i = 0; i < 50; i++) {
+            years[i] = year;
+            year = year - 1;
+        }
+        yearsList = new JList(years);
+        yearScroller = new JScrollPane(yearsList);
+        yearScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        yearScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        yearScroller.setAutoscrolls(true);
+        yearsList.setVisibleRowCount(5);
+        yearsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        yearM.add(yearScroller);
+        yearMB.add(yearM);
+        yearsList.addListSelectionListener(new YearListener());
 
-        monthL = new JLabel("Місяць:");
-        monthText = new JTextField(2);
-        monthText.addActionListener(new MonthListener());
 
-        dateL = new JLabel("День:");
-        dateText = new JTextField(3);
-        dateText.addActionListener(new DateListener());
+        monthM = new JMenu("Місяць");
+        Integer[] months = new Integer[12];
+        for (int j = 0; j < 12; j++) {
+            months[j] = j + 1;
+        }
+        monthList = new JList(months);
+        monthsScroller = new JScrollPane(monthList);
+        monthsScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        monthsScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        monthList.setVisibleRowCount(5);
+        monthList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        monthM.add(monthsScroller);
+        yearMB.add(monthM);
+        monthList.addListSelectionListener(new MonthListener());
+
+        dateM = new JMenu("День");
+        Integer [] dates = new Integer [31];
+        for (int d=0; d<31; d++)
+            dates[d] = d+1;
+        dateList = new JList(dates);
+        dateList.setVisibleRowCount(5);
+        dateList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        dateScroller = new JScrollPane(dateList);
+        dateScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        dateScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        dateM.add(dateScroller);
+        yearMB.add(dateM);
+        dateList.addListSelectionListener (new DateListener());
 
         clubL = new JLabel("Клуб:");
         clubText = new JTextField(20);
@@ -134,18 +183,13 @@ class ParticipantsInputer extends JPanel {
         panelTown.add(townText);
         panel.add(panelTown);
 
-        JLabel titleDoB = new JLabel("ДАТА НАРОДЖЕННЯ:");
+        JLabel titleDoB = new JLabel("народження  ");
         JPanel paneldOB = new JPanel();
-        panel.add(titleDoB);
-        paneldOB.add(yearL);
-        paneldOB.add(yearsText);
-        paneldOB.add(monthL);
-        paneldOB.add(monthText);
-        paneldOB.add(dateL);
-        paneldOB.add(dateText);
+        paneldOB.add(yearMB);
+        paneldOB.add(titleDoB);
         panel.add(paneldOB);
 
-        JPanel panelClub= new JPanel();
+        JPanel panelClub = new JPanel();
         panelClub.add(clubL);
         panelClub.add(clubText);
         panel.add(panelClub);
@@ -173,110 +217,129 @@ class ParticipantsInputer extends JPanel {
         panel.add(panbutton);
 
 
-
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.getContentPane().add(BorderLayout.NORTH, title1);
         frame.getContentPane().add(BorderLayout.SOUTH, title);
+        frame.getContentPane().add(BorderLayout.EAST, title2);
+        frame.getContentPane().add(BorderLayout.WEST, title3);
 
-        frame.setSize(550, 420);
+        frame.setSize( 550, 420);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
-    class NameListener implements ActionListener {
-        public void actionPerformed (ActionEvent nam){
-            name = nameText.getText();
-            townText.requestFocus();
+        class NameListener implements ActionListener {
+            public void actionPerformed(ActionEvent nam) {
+                name = nameText.getText();
+                townText.requestFocus();
+            }
         }
-    }
-    class SexMListener implements ActionListener {
-        public void actionPerformed (ActionEvent sexM) {
-            sex = false;
-            ctreateParticipant.requestFocus();
+
+        class SexMListener implements ActionListener {
+            public void actionPerformed(ActionEvent sexM) {
+                sex = false;
+                ctreateParticipant.requestFocus();
+            }
         }
-    }
-    class SexFListener implements ActionListener {
-        public void actionPerformed (ActionEvent sexF) {
-            sex = true;
-            ctreateParticipant.requestFocus();
+
+        class SexFListener implements ActionListener {
+            public void actionPerformed(ActionEvent sexF) {
+                sex = true;
+                ctreateParticipant.requestFocus();
+            }
         }
-    }
-    class TownListener implements ActionListener {
-        public void actionPerformed (ActionEvent tow) {
-            town = townText.getText();
-            yearsText.requestFocus();
+
+        class TownListener implements ActionListener {
+            public void actionPerformed(ActionEvent tow) {
+                town = townText.getText();
+                yearM.requestFocus();
+            }
         }
-    }
-    class YearListener implements ActionListener {
-        public void actionPerformed (ActionEvent yea){
-            year = Integer.parseInt(yearsText.getText());
-            monthText.requestFocus();
+
+        class YearListener implements ListSelectionListener {
+            public void valueChanged(ListSelectionEvent yearL) {
+                if (!yearL.getValueIsAdjusting()) {
+                    year = (Integer) (yearsList.getSelectedValue());
+                }
+                monthM.requestFocus();
+            }
         }
-    }
-    class MonthListener implements ActionListener {
-        public void actionPerformed (ActionEvent mon){
-            month = Integer.parseInt(monthText.getText());
-            dateText.requestFocus();
+
+        class MonthListener implements ListSelectionListener {
+            public void valueChanged(ListSelectionEvent monL) {
+                if (!monthList.getValueIsAdjusting()) {
+                    month = (Integer) (monthList.getSelectedValue());
+                    dateList.requestFocus();
+                }
+            }
         }
-    }
-    class DateListener implements ActionListener {
-        public void actionPerformed (ActionEvent da){
-            date = Integer.parseInt(dateText.getText());
-            dOB = LocalDate.of(year, month, date);
-            age = Secretary.askAge(dOB);
-            clubText.requestFocus();
-        }
-    }
-    class ClubListener implements ActionListener {
-        public void actionPerformed (ActionEvent clu){
-            club = clubText.getText();
-            coachText.requestFocus();
-        }
-    }
-    class CoachListener implements ActionListener {
-        public void actionPerformed (ActionEvent coac){
-            coach = coachText.getText();
-            rangText.requestFocus();
-        }
-    }
-    class RangListener implements ActionListener {
-        public void actionPerformed (ActionEvent ran){
-            rang = rangText.getText();
-            kindOfProgramText.requestFocus();
-        }
-    }
-    class KOPListener implements ActionListener {
-        public void actionPerformed (ActionEvent kop){
-            kindOfProgram = kindOfProgramText.getText();
-            kindOfTaoText.requestFocus();
-        }
-    }
-    class KOTListener implements ActionListener {
-        public void actionPerformed (ActionEvent kot){
-            kindOfTao = kindOfTaoText.getText();
-            sexCBm.requestFocus();
-        }
-    }
-    class CreateNewPListener implements ActionListener {
-        public void actionPerformed (ActionEvent creP) {
-            TaoPerformer taoperformer = new TaoPerformer(name, sex, town, dOB, age, club, coach, rang, kindOfProgram, kindOfTao);
-            participators.add(taoperformer);
-            nameText.setText("");
-            townText.setText("");
-            yearsText.setText("");
-            monthText.setText("");
-            dateText.setText("");
-            clubText.setText("");
-            coachText.setText("");
-            rangText.setText("");
-            kindOfProgramText.setText("");
-            kindOfTaoText.setText("");
-            nameText.requestFocus();
-        }
-    }
-    class PrintListener implements ActionListener {
-        public void actionPerformed (ActionEvent printP) {
-            for (Partisipator ps : participators)
-                System.out.println(ps.toString());
-        }
-    }
+
+            class DateListener implements ListSelectionListener {
+                public void valueChanged(ListSelectionEvent da) {
+                    if (!dateList.getValueIsAdjusting()) {
+                        date = (Integer) (dateList.getSelectedValue());
+                        dOB = LocalDate.of(year, month, date);
+                        age = Secretary.askAge(dOB);
+                        clubText.requestFocus();
+                    }
+                }
+            }
+
+            class ClubListener implements ActionListener {
+                public void actionPerformed(ActionEvent clu) {
+                    club = clubText.getText();
+                    coachText.requestFocus();
+                }
+            }
+
+            class CoachListener implements ActionListener {
+                public void actionPerformed(ActionEvent coac) {
+                    coach = coachText.getText();
+                    rangText.requestFocus();
+                }
+            }
+
+            class RangListener implements ActionListener {
+                public void actionPerformed(ActionEvent ran) {
+                    rang = rangText.getText();
+                    kindOfProgramText.requestFocus();
+                }
+            }
+
+            class KOPListener implements ActionListener {
+                public void actionPerformed(ActionEvent kop) {
+                    kindOfProgram = kindOfProgramText.getText();
+                    kindOfTaoText.requestFocus();
+                }
+            }
+
+            class KOTListener implements ActionListener {
+                public void actionPerformed(ActionEvent kot) {
+                    kindOfTao = kindOfTaoText.getText();
+                    sexCBm.requestFocus();
+                }
+            }
+
+            class CreateNewPListener implements ActionListener {
+                public void actionPerformed(ActionEvent creP) {
+                    TaoPerformer taoperformer = new TaoPerformer(name, sex, town, dOB, age, club, coach, rang, kindOfProgram, kindOfTao);
+                    participators.add(taoperformer);
+                    nameText.setText("");
+                    townText.setText("");
+                    clubText.setText("");
+                    coachText.setText("");
+                    rangText.setText("");
+                    kindOfProgramText.setText("");
+                    kindOfTaoText.setText("");
+                    nameText.requestFocus();
+                }
+            }
+
+            class PrintListener implements ActionListener {
+                public void actionPerformed(ActionEvent printP) {
+                    TaoPerformer.printTitle();
+                    for (Partisipator ps : participators)
+                        System.out.println(ps.toString());
+                }
+            }
 }

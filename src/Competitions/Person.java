@@ -43,7 +43,7 @@ Person () {}
 
     @Override
     public String toString() {
-        return getName() + " " + getTown();
+        return (String.format("%-35s %18s", getName(), getTown()));
     }
 
 }

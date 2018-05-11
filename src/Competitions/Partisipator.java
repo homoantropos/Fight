@@ -73,6 +73,6 @@ class Partisipator extends Person implements Comparable <Partisipator>{
 
     @Override
     public String toString() {
-        return getName() + " " + getTown() + " " + getdOB().toString() + " " + getAge() + " " + club + " " + coach + " " + rang + " " + kindOfProgram;
+        return String.format("%-35s %18s %13s %3d %18s %20s %10s %22s", getName(), getTown(), getdOB().toString(), getAge(), getClub(), getCoach(), getRang(), getKindOfProgram());
     }
 }

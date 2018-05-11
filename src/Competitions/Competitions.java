@@ -7,8 +7,8 @@ public class Competitions {
 
 
     public static void main(String[] args) {
-        ParticipantsInputer partIn = new ParticipantsInputer();
-        partIn.go();
+        StartOfWork start = new StartOfWork();
+        start.star();
 
 //        System.out.println("Розпочати змагання? Виберіть +/-: ");
 //
